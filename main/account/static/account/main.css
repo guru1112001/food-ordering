@@ -1,0 +1,224 @@
+.navbarContainer {
+  background-color: #1f5051;
+  padding: 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoHeading {
+  text-decoration: none;
+  color: #7fb7b0;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+
+.logoHeading:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.anchoreContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.anchorestag {
+  padding: 10px;
+  margin: 0px;
+  list-style: none;
+}
+
+.anchorestag a {
+  color: #7fb7b0;
+}
+
+.navbarButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navbarButtonsContainer a {
+  color: #7fb7b0;
+  background-color: transparent;
+  padding: 5px 14px;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.navbarButtonsContainer a:hover {
+  background-color: white;
+  border: 2px solid #caf0f8;
+}
+
+.registerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 55px 0px;
+  /* background-color: #5CB3E2; */
+  background-image: url("https://thumbs.dreamstime.com/b/abstract-sky-blue-color-mixture-effects-texture-background-wallpaper-marble-pattern-interiors-wall-design-many-uses-189072790.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.registerCard {
+  background-image: url("https://img.freepik.com/premium-vector/copyright-plagiarism-illustration_23-2148705662.jpg?");
+  height: 600px;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 80%;
+  /* border: 1px solid black; */
+  border-radius: 20px;
+  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px; */
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  background-color: white;
+}
+
+.user_card {
+  width: 500px;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user_card h3 {
+  color: #198ca0;
+  font-family: "Source Sans Pro", sans-serif;
+}
+.input_Container {
+  margin: 15px 0px;
+}
+
+.input_Container input {
+  width: 450px;
+  background-color: #198ca0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 18px;
+  border: 0px;
+  color: white;
+  border: none;
+  padding: 5px;
+}
+
+::placeholder {
+  color: white;
+}
+
+.button_Container {
+  text-align: center;
+}
+
+.button_Container input {
+  width: 250px;
+  padding: 0px;
+  color: white;
+  background-color: #7fb7b0;
+  border-radius: 10px;
+}
+
+.loginAccount a {
+  color: #198ca0;
+  border: 1px solid #198ca0;
+  padding: 2px 10px;
+}
+
+.loginAccount a:hover {
+  background-color: #198ca0;
+  color: white;
+}
+
+
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 55px 0px;
+  /* background-color: #5CB3E2; */
+  background-image: url("https://thumbs.dreamstime.com/b/abstract-sky-blue-color-mixture-effects-texture-background-wallpaper-marble-pattern-interiors-wall-design-many-uses-189072790.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.loginCard {
+  background-image: url("https://img.freepik.com/free-vector/man-sitting-desk-unlocking-computer-computer-settings-login-flat-illustration_74855-20645.jpg?w=740&t=st=1660646376~exp=1660646976~hmac=e45cd7656061111998c17f2c4ad337feeefedea40ad54174ba645ef492ff3ab8");
+  height: 600px;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 80%;
+  /* border: 1px solid black; */
+  border-radius: 20px;
+  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px; */
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+      rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  background-color: white;
+}
+
+.user_card {
+  width: 500px;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user_card h3 {
+  color: #198ca0;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.input_Container {
+  margin: 15px 0px;
+}
+
+.input_Container input {
+  width: 450px;
+  background-color: #198ca0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 18px;
+  border: 0px;
+  color: white;
+  border: none;
+  padding: 5px;
+}
+
+::placeholder {
+  color: white;
+}
+
+.forget_Container {
+  text-align: center;
+  font-size: 16px;
+  color: #198ca0;
+}
+
+.button_Container {
+  text-align: center;
+}
+
+.button_Container input {
+  width: 250px;
+  padding: 0px;
+  color: white;
+  background-color: #7fb7b0;
+  border-radius: 10px;
+}
+
+.CreateAccount a {
+  color: #198ca0;
+}
+
+.loginnavbarContainer {
+  position: absolute;
+  width: 1210px;
+}

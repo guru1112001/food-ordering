@@ -1,0 +1,38 @@
+{% extends "account/base.html" %}
+
+
+{% block content %}
+<div class="loginContainer">
+    <div class="loginCard">
+        <div class="user_card">
+            <h3 id="form-title">USER LOGIN</h3>
+            <div class="d-flex justify-content-center form_container">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="input_Container">
+                        <input type="text" name="username" placeholder="Username" />
+                    </div>
+                    <div class="input_Container">
+                        <input type="password" name="password" placeholder="Password" />
+                    </div>
+                    <div class="forget_Container">
+                        <p>Forget Password</p>
+                    </div>
+                    <div class="button_Container">
+                        <input class="btn login_btn" type="submit" value="Login" />
+                    </div>
+                </form>
+            </div>
+            {% for message in messages%}
+            <p>{{message}}</p>
+            {% endfor %}
+            <div class="CreateAccount">
+                <a href="{% url 'register' %}" class="ml-2 btn btn-outline-light">Create Account</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+{% endblock %}

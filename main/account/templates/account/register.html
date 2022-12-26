@@ -1,0 +1,50 @@
+{% extends "account/base.html" %}
+
+
+{% block content %}
+<div class="registerContainer">
+    <div class="registerCard">
+        <div class="user_card">
+                <h3 id="form-title">REGISTER ACCOUNT</h3>
+            <div class="d-flex justify-content-center form_container">
+
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="input_Container">
+                        
+                        {{form.first_name}}
+                    </div>
+
+                    <div class="input_Container">
+                        
+                        {{form.username}}
+                    </div>
+                    <div class="input_Container">
+                        
+                        {{form.email}}
+                    </div>
+                    <div class="input_Container">
+                        
+                        {{form.password1}}
+                    </div>
+                    <div class="input_Container">
+                        
+                        {{form.password2}}
+                    </div>
+
+                    <div class="button_Container">
+                        <input class="btn login_btn" type="submit" value="Register Account">
+                    </div>
+                </form>
+            </div>
+            {{form.errors}}
+            <div class="mt-4">
+                <div class="loginAccount">
+                    Already have an account? <a href="{% url 'login' %}"
+                        class="ml-2 btn btn-outline-light">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
