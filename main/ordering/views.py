@@ -37,6 +37,12 @@ def add_product(request):
     context = {"form": form}
     return render(request,"ordering/add_product.html",context)
 
+@admin_only
+def view_product(request):
+    products=Product.objects.all()
+    context={"products":products}
+    return render(request,"ordering/view_product.html",context)
+
 
     
 
