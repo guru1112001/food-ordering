@@ -20,14 +20,14 @@ class Product(models.Model):
 class order_info(models.Model):
     options=(("Yes","Yes"),
             ("No","No"),)
-    customer=models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True)
+    customer=models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True,related_name="customer_order")
     date_ordered=models.DateField(auto_now_add=True)
     complete=models.BooleanField(default=False)
     transaction_id=models.CharField(max_length=10)
     take_away=models.CharField(max_length=10,choices=options)
 
-    def __str__(self) -> str:
-        return self.customer
+    def __str__(self):
+        return self.customer.name
 
     
     @property

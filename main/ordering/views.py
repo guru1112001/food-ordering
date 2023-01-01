@@ -43,6 +43,42 @@ def view_product(request):
     context={"products":products}
     return render(request,"ordering/view_product.html",context)
 
+@admin_only
+def update_product(request,pk):
+    product=Product.objects.get(id=pk)
+    form=add_productform(instance=product)
+
+    if request.POST:
+        form=add_productform(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard")
+    context={"form":form}
+    return render(request,"ordering/update_product.html",context)
+
+@admin_only
+def customer(request,pk_test):
+    customer=Customer.objects.get(id=pk_test)
+    orders = customer.customer_order.all()
+    order_count=orders.count()
+    carts=cart.objects.all()
+
+    context={"customer":customer,"orders":orders,"order_count":order_count,"carts":carts}
+    return render(request,"ordering/customer.html",context)
+
+@admin_only
+def delete_order(request,pk,pk_test):
+    orders=order_info.objects.get(id=pk)
+    carts=cart.objects.get(id=pk_test)
+    if request.POST:
+        carts.delete()
+        if request.POST.get("confirm"):
+            return redirect("dashboard")
+    context={"orders":orders,"carts":carts}
+    return render(request,"ordering/delete_order.html",context)
+
+
+
 
     
 
