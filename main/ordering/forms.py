@@ -1,4 +1,4 @@
-from .models import Product
+from .models import Product,cart
 from django.forms import ModelForm 
 
 class add_productform(ModelForm):
@@ -24,3 +24,8 @@ class add_productform(ModelForm):
             self.fields['image'].widget.attrs.update({
                 'class': 'form-control'
             })
+
+class cartform(ModelForm):
+    class Meta():
+        model=cart
+        fields="__all__"

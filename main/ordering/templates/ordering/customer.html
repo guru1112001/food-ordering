@@ -48,8 +48,8 @@
                     <td>{{order.date_ordered}}</td>
                     <td>{{order.complete}}</td>
                    
-                    <td><a class="btn btn-sm btn-warning" href="#">Update</a></td>
-                    <td><a data-action = "del" class="btn btn-sm btn-danger" href="#">Delete</a></td>
+                    <td><a class="btn btn-sm btn-warning" href="{% url 'update_order' orderitem.id %}">Update</a></td>
+                    <td><a data-action = "del" class="btn btn-sm btn-danger" href="{% url 'delete_order' orderitem.order.id  orderitem.id %}">Delete</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}

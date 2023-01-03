@@ -92,7 +92,7 @@
                     <td>{{carts.product}}</td>
                     <td>{{carts.date_added}}</td>
                     <td>{{carts.quantity}}</td>
-                    <td><a class="btn btn-sm btn-warning" href="#">Update</a></td>
+                    <td><a class="btn btn-sm btn-warning" href="{% url 'update_order' carts.id %}">Update</a></td>
                     <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' carts.order.id  carts.id %}">Delete</a></td>
                     {% endif %}
                 </tr>

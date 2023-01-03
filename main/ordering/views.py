@@ -2,12 +2,31 @@ from django.shortcuts import render,redirect
 from .models import cart,order_info,Product
 from account.models import Customer
 from .decorators import admin_only,user_only
-from .forms import add_productform
+from .forms import add_productform,cartform
+from django .views.generic import ListView
 # Create your views here.
 
 @user_only
 def menu(request):
     return render(request,"ordering/menu.html")
+
+
+def breakfast(request):
+    products=Product.objects.all()
+    context={"products":products}
+    return render(request,"ordering/breakfast.html",context)
+
+def lunch(request):
+    products=Product.objects.all()
+    context={"products":products}
+    return render(request,"ordering/lunch.html",context)
+
+def todayspl(request):
+    products=Product.objects.all()
+    context={"products":products}
+    return render(request,"ordering/todayspl.html",context)
+
+    
 
 
 @admin_only
@@ -76,6 +95,20 @@ def delete_order(request,pk,pk_test):
             return redirect("dashboard")
     context={"orders":orders,"carts":carts}
     return render(request,"ordering/delete_order.html",context)
+
+@admin_only
+def update_order(request,pk_test):
+    order=cart.objects.get(id=pk_test)
+    form=cartform(instance=order)
+    if request.method=="POST":
+        form=cartform(request.POST,instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard")
+
+    context={"form":form}
+    return render(request,"ordering/update_order.html",context)
+
 
 
 

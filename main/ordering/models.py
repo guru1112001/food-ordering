@@ -15,6 +15,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    @property
+    def ImageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
 
     
 class order_info(models.Model):
