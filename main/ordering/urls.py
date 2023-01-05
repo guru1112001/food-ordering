@@ -1,6 +1,8 @@
 from . import views
 from django.urls import path
 
+
+
 urlpatterns = [
     path("",views.menu,name="menu"),
     path("dashboard/",views.Dashboard , name="dashboard"),
@@ -13,5 +15,8 @@ urlpatterns = [
     path("breakfast/",views.breakfast,name="breakfast"),
     path("lunch/",views.lunch,name="lunch"),
     path("todayspl/",views.todayspl,name="todayspl"),
+    path("Product/<int:id>/", views.ProductDetailView,name="Productdetail"),
+    path('add-to-cart/<int:pk>/',views.add_to_cart, name='add-to-cart'),
+
     
 ]

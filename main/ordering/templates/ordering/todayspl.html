@@ -1,16 +1,16 @@
 {% extends "account/base.html" %}
 
 {% block content %}
-
 <div class="row row1">
-    <h1 style="
-    padding-left: 2em;">Todayspl</h1>
     {% for product in products %}
     {% if product.category == 'Todayspl' %}
     <div class="col-lg-4">
-        <img class="thumbnail" src="{{product.image.url }}">
-        <div class="box-element product">
-            <h6><strong>{{product.name}}</strong></h6>
+        <a href="{% url 'Productdetail' product.id   %}">
+
+            <img class="thumbnail" src="{{product.ImageURL}}">
+            <div class="box-element product">
+                <h6><strong>{{product.name}}</strong></h6>
+            </a>
             <hr>
             <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
             <h4 style="display: inline-block;float:none">₹ {{product.price|floatformat:2}}</h4>

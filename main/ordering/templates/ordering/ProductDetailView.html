@@ -1,0 +1,20 @@
+{% extends "account/base.html" %}
+
+{% block content %}
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ product.ImageURL }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <h1 class="mr-2">{{ product.name }}</h1>
+        </div>
+        <p class="article-content">{{ product.description }}</p>
+        <h4 style="display: inline-block;float:none">₹ {{product.price|floatformat:2}}</h4>
+        
+        <!-- <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add
+            to Cart</button> -->
+            <a href="{% url 'add-to-cart' product.id %}"  class="btn btn-outline-secondary add-btn update-cart">Add
+                to Cart</a>
+    </div>
+</article>
+
+{% endblock %}

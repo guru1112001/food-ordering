@@ -1,9 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import cart,order_info,Product
 from account.models import Customer
 from .decorators import admin_only,user_only
 from .forms import add_productform,cartform
-from django .views.generic import ListView
+from django. contrib import messages
 # Create your views here.
 
 @user_only
@@ -25,6 +25,44 @@ def todayspl(request):
     products=Product.objects.all()
     context={"products":products}
     return render(request,"ordering/todayspl.html",context)
+
+def ProductDetailView(request,id):
+    product=get_object_or_404(Product,pk=id)
+    context={"product":product}
+    return render(request,"ordering/ProductDetailView.html",context)
+
+def add_to_cart(request,pk):
+    customer_obj = Customer.objects.get(user=request.user)
+    product=get_object_or_404(Product,id=pk)
+    order_item,created=cart.objects.get_or_create(product=product,user=customer_obj,complete=False)
+    order_qs=order_info.objects.get_or_create(customer=customer_obj,complete=False)
+    print("order qs : ", order_qs)
+    if order_qs:
+        order=order_qs[0]
+        # print("order info product : ", order_qs.product.all())
+        if order_info.objects.filter(product=product).exists():
+        # if order.product.filter(product__pk=product.pk).exists():
+            order_item.quantity+=1
+            order_item.save()
+            messages.info(request, "This item quantity was updated.")
+            return redirect("Productdetail", id=product.pk)
+        else:
+         order.product.add(order_item)
+         messages.info(request, "This item was added to your cart.")
+        return redirect("Productdetail", id=product.pk)
+    else:
+        order=order_info.objects.create(customer=customer_obj)
+        order.product.add(order_item)
+        messages.info(request, "This item was added to your cart.")
+        return redirect("Productdetail", id=product.pk)
+
+
+
+
+    
+            
+
+
 
     
 

@@ -39,17 +39,17 @@
                     <th>Remove</th>
                 </tr>
                 {% for order in orders  %}
-                {% for orderitem in carts %}
+                {% for cart in carts %}
                 <tr>
-                    {% if orderitem.order.id == order.id %}
-                    <td>{{orderitem.product.name}}</td>
-                    <td>{{orderitem.product.category}}</td>
+                    {% if cart.order.id == order.id %}
+                    <td>{{cart.product.name}}</td>
+                    <td>{{cart.product.category}}</td>
                     
                     <td>{{order.date_ordered}}</td>
                     <td>{{order.complete}}</td>
                    
-                    <td><a class="btn btn-sm btn-warning" href="{% url 'update_order' orderitem.id %}">Update</a></td>
-                    <td><a data-action = "del" class="btn btn-sm btn-danger" href="{% url 'delete_order' orderitem.order.id  orderitem.id %}">Delete</a></td>
+                    <td><a class="btn btn-sm btn-warning" href="{% url 'update_order' cart.id %}">Update</a></td>
+                    <td><a data-action = "del" class="btn btn-sm btn-danger" href="{% url 'delete_order' cart.order.id  cart.id %}">Delete</a></td>
                     {% endif %}
                 </tr>
                 {% endfor %}
