@@ -33,28 +33,45 @@ def ProductDetailView(request,id):
 
 def add_to_cart(request,pk):
     customer_obj = Customer.objects.get(user=request.user)
-    product=get_object_or_404(Product,id=pk)
-    order_item,created=cart.objects.get_or_create(product=product,user=customer_obj,complete=False)
-    order_qs=order_info.objects.get_or_create(customer=customer_obj,complete=False)
-    print("order qs : ", order_qs)
-    if order_qs:
-        order=order_qs[0]
-        # print("order info product : ", order_qs.product.all())
-        if order_info.objects.filter(product=product).exists():
-        # if order.product.filter(product__pk=product.pk).exists():
-            order_item.quantity+=1
+    product = Product.objects.get(id=pk)
+    order_item, created = cart.objects.get_or_create(product=product, user=customer_obj, complete=False)
+    order_qs = order_info.objects.filter(customer=customer_obj, complete=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        # check if the order item is in the order
+        if order.products.filter(product__id=pk).exists():
+            order_item.quantity += 1
             order_item.save()
-            messages.info(request, "This item quantity was updated.")
-            return redirect("Productdetail", id=product.pk)
         else:
-         order.product.add(order_item)
-         messages.info(request, "This item was added to your cart.")
-        return redirect("Productdetail", id=product.pk)
+            order.products.add(order_item)
     else:
-        order=order_info.objects.create(customer=customer_obj)
-        order.product.add(order_item)
-        messages.info(request, "This item was added to your cart.")
-        return redirect("Productdetail", id=product.pk)
+        # ordered_date = timezone.now()
+        order = order_info.objects.create(customer=customer_obj)
+        order.items.add(order_item)
+    return redirect("Productdetail", id=product.pk)
+    # customer_obj = Customer.objects.get(user=request.user)
+    # product=get_object_or_404(Product,id=pk)
+    # order_item,created=cart.objects.get_or_create(product=product,user=customer_obj,complete=False)
+    # order_qs=order_info.objects.get_or_create(customer=customer_obj,complete=False)
+    # print("order qs : ", order_qs)
+    # if order_qs:
+    #     order=order_qs[0]
+    #     # print("order info product : ", order_qs.product.all())
+    #     if order_info.objects.filter(product=product).exists():
+    #     # if order.product.filter(product__pk=product.pk).exists():
+    #         order_item.quantity+=1
+    #         order_item.save()
+    #         messages.info(request, "This item quantity was updated.")
+    #         return redirect("Productdetail", id=product.pk)
+    #     else:
+    #      order.product.add(order_item)
+    #      messages.info(request, "This item was added to your cart.")
+    #     return redirect("Productdetail", id=product.pk)
+    # else:
+    #     order=order_info.objects.create(customer=customer_obj)
+    #     order.product.add(order_item)
+    #     messages.info(request, "This item was added to your cart.")
+    #     return redirect("Productdetail", id=product.pk)
 
 
 
@@ -76,7 +93,7 @@ def Dashboard(request):
 
     total_customer=customers.count()
     total_order=orders_info.count()
-    take_away=orders_info.filter(take_away="Yes").count()
+    take_away=orders_info.filter(take_away="True").count()
     payment=orders_info.filter(complete="True").count()
 
     context={"orders_info":orders_info, "carts":carts, "products":products , "customers":customers , "total_customer":total_customer, "total_order":total_order , "take_away":take_away , "payment":payment }
@@ -112,6 +129,16 @@ def update_product(request,pk):
             return redirect("dashboard")
     context={"form":form}
     return render(request,"ordering/update_product.html",context)
+
+@admin_only
+def deleteProduct(request, pk):
+    product = Product.objects.get(id=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('view_product')
+
+    context = {'product': product}
+    return render(request, 'ordering/delete_product.html', context)
 
 @admin_only
 def customer(request,pk_test):

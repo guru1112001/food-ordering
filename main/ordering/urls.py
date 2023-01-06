@@ -16,6 +16,7 @@ urlpatterns = [
     path("lunch/",views.lunch,name="lunch"),
     path("todayspl/",views.todayspl,name="todayspl"),
     path("Product/<int:id>/", views.ProductDetailView,name="Productdetail"),
+    path('delete_product/<str:pk>', views.deleteProduct, name="delete_product"),
     path('add-to-cart/<int:pk>/',views.add_to_cart, name='add-to-cart'),
 
     
