@@ -1,0 +1,22 @@
+{% extends "account/base.html" %}
+
+{% block content %}
+<div class="container wow fadeIn">
+    <h2 class="my-5 h2 text-center">Checkout form</h2>
+    <div class="row">
+      <div class="col-md-8 mb-4">
+        <div class="card">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <p>
+                    <label for="">Customer : {{customer.name}}</label>
+                </p>
+                {{form.as_p}}
+                
+
+                <div class="button_Container">
+                    <input class="btn login_btn" type="submit" value="Checkout">
+                </div>
+            </form>
+
+{% endblock %}

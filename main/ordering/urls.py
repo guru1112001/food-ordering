@@ -1,5 +1,6 @@
 from . import views
 from django.urls import path
+from .views import OrderSummaryView
 
 
 
@@ -18,6 +19,15 @@ urlpatterns = [
     path("Product/<int:id>/", views.ProductDetailView,name="Productdetail"),
     path('delete_product/<str:pk>', views.deleteProduct, name="delete_product"),
     path('add-to-cart/<int:pk>/',views.add_to_cart, name='add-to-cart'),
+    path('remove-from-cart/<int:pk>/',views.remove_from_cart, name='remove-from-cart'),
+    # path("order-summary/",views.order_summary,name="order-summary"),
+    path("order-summary/",OrderSummaryView.as_view(),name="order-summary"),
+    path('remove-item-cart/<int:pk>/',views.remove_single_from_cart, name='remove_single_from_cart'),
+    path("checkout/",views.checkoutview,name="checkout"),
+
+
+
+
 
     
 ]

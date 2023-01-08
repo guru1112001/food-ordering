@@ -1,3 +1,4 @@
+{% load cart_template_tags %}
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
@@ -7,15 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'account/main.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/95f88e12b4.js" crossorigin="anonymous"></script>
+    
     <title>navbar</title>
     <style>
-        .nav-link a:hover{
+        .nav-link a:hover {
             color: black;
 
         }
     </style>
 </head>
+
 <body>
     <nav class="navbarContainer">
         {% if not user.is_staff %}
@@ -23,7 +28,7 @@
         {% else %}
         <a class="logoHeading" href="#">Canteen</a>
         {% endif %}
-        
+
         <div class="anchoreContainer" id="navbarSupportedContent">
             <ul class="anchorestag">
                 <li class="nav-item active">
@@ -37,7 +42,11 @@
             <div class="navbarButtonsContainer">
                 {% if user.is_authenticated %}
                 <a href="#" class="my-2 my-sm-0">About</a>
-
+                <a href="{% url 'order-summary' %}" class="nav-link waves-effect">
+                    <span class="badge info z-depth-1 mr-1"></span>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+                </a>
                 <!-- <a href="#">
                     <img id="cart-icon" src="{% static 'images/cart.png' %}" />
                 </a>  
@@ -52,7 +61,29 @@
             </div>
         </div>
     </nav>
+    {% if messages %}
+    <!-- <div class="mt-5 pt-4"> -->
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
     {% block content %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
 </body>
+
 
 </html>

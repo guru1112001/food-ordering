@@ -1,5 +1,6 @@
-from .models import Product,cart
+from .models import Product,cart,Address
 from django.forms import ModelForm 
+from django import forms
 
 class add_productform(ModelForm):
     class Meta:
@@ -29,3 +30,26 @@ class cartform(ModelForm):
     class Meta():
         model=cart
         fields="__all__"
+
+sem_choice=(
+    ("1","1"),
+    ("2","2"),
+    ("3","3"),
+    ("4","4"),
+    ("5","5"),
+    ("6","6")
+    )
+
+course_choice={
+    ("bca","bca"),
+    ("bba","bba"),
+    ("bcom","bcom")
+}
+class checkoutform(ModelForm):
+    
+    class Meta:
+        model=Address
+        fields="__all__"
+        exclude=["customer"]
+
+

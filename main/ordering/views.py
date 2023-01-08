@@ -1,9 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import cart,order_info,Product
+from .models import cart,order_info,Product,Address
 from account.models import Customer
 from .decorators import admin_only,user_only
-from .forms import add_productform,cartform
+from .forms import add_productform,cartform,checkoutform
 from django. contrib import messages
+from django.views.generic import View
+from django.core.exceptions import ObjectDoesNotExist
+
 # Create your views here.
 
 @user_only
@@ -42,13 +45,17 @@ def add_to_cart(request,pk):
         if order.products.filter(product__id=pk).exists():
             order_item.quantity += 1
             order_item.save()
+            messages.info(request, "This item quantity was updated.")
+            return redirect("order-summary" ) 
         else:
             order.products.add(order_item)
+            messages.info(request, "This item was added to your cart.")
+            return redirect("order-summary" ) 
     else:
-        # ordered_date = timezone.now()
         order = order_info.objects.create(customer=customer_obj)
-        order.items.add(order_item)
-    return redirect("Productdetail", id=product.pk)
+        order.products.add(order_item)
+        messages.info(request, "This item was added to your cart.")
+        return redirect("order-summary" ) 
     # customer_obj = Customer.objects.get(user=request.user)
     # product=get_object_or_404(Product,id=pk)
     # order_item,created=cart.objects.get_or_create(product=product,user=customer_obj,complete=False)
@@ -72,6 +79,132 @@ def add_to_cart(request,pk):
     #     order.product.add(order_item)
     #     messages.info(request, "This item was added to your cart.")
     #     return redirect("Productdetail", id=product.pk)
+
+def remove_from_cart(request,pk):
+    customer_obj = Customer.objects.get(user=request.user)
+    product = Product.objects.get(id=pk)
+    # order_item, created = cart.objects.get_or_create(product=product, user=customer_obj, complete=False)
+    order_qs = order_info.objects.filter(customer=customer_obj, complete=False)
+    if order_qs.exists():
+        order=order_qs[0]
+        if order.products.filter(product__id=pk).exists():
+            order_item = cart.objects.filter(
+                product=product,
+                user=customer_obj,
+                complete=False
+            )[0]
+            order.products.remove(order_item)
+            order_item.delete()
+            messages.info(request, "This item was removed from your cart.")
+            return redirect("order-summary") 
+        else:
+            messages.info(request, "This item was not in your cart")
+            return redirect("order-summary") 
+    
+    else:
+        messages.info(request, "You do not have an active order")
+        return redirect("order-summary")
+
+def remove_single_from_cart(request,pk):
+    customer_obj = Customer.objects.get(user=request.user)
+    product = Product.objects.get(id=pk)
+    # order_item, created = cart.objects.get_or_create(product=product, user=customer_obj, complete=False)
+    order_qs = order_info.objects.filter(customer=customer_obj, complete=False)
+    if order_qs.exists():
+        order=order_qs[0]
+        if order.products.filter(product__id=pk).exists():
+            order_item = cart.objects.filter(
+                product=product,
+                user=customer_obj,
+                complete=False
+            )[0]
+            if order_item.quantity>1:
+                order_item.quantity -= 1
+                order_item.save()
+                messages.info(request, "This item was update from .")
+                return redirect("order-summary") 
+            else:
+                order.products.remove(order_item)
+                return redirect("Productdetail", id=product.pk)
+                
+        else:
+            messages.info(request, "This item was not in your cart")
+            return redirect("order-summary") 
+    
+    else:
+        messages.info(request, "You do not have an active order")
+        return redirect("order-summary")
+
+# def order_summary(request):
+#     customer_obj = Customer.objects.get(user=request.user)
+#     orders=order_info.objects.get(customer=customer_obj,complete=False)
+#     context={"orders":orders}
+#     return render(request,"ordering/order_summary.html",context)
+
+
+class OrderSummaryView(View):
+    def get(self, *args, **kwargs):
+        customer_obj = Customer.objects.get(user=self.request.user)
+        try:
+            order = order_info.objects.get(customer=customer_obj, complete=False)
+            context = {
+                'object': order
+            }
+            return render(self.request, 'ordering/order_summary.html', context)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have an active order")
+            return redirect("menu")
+
+
+
+# def checkoutview(request):
+#     customer_obj = Customer.objects.get(user=request.user)
+#     form=checkoutform()
+#     if request.method == "POST":
+#         form= checkoutform(request.POST)
+#         if form.is_valid():
+#             # form.save()
+#             orders = order_info.objects.filter(customer=customer_obj, complete=False)[0]
+#             print("orders : ", orders)
+#             orders.take_away = True
+#             orders.complete = True
+#             orders.save()
+#             clean_data = form.cleaned_data
+#             obj = Address.objects.create(**clean_data)
+#             obj.customer = customer_obj
+#             obj.save()
+#             # cart_obj = cart.objects.filter(user=customer_obj)
+#             # cart_obj.delete()
+#             return redirect("menu")
+    
+#     else:
+#         form=checkoutform()
+#     return render(request,"ordering/checkout.html",{"form":form, "customer":customer_obj})
+
+def checkoutview(request):
+    customer_obj = Customer.objects.get(user=request.user)
+    order = order_info.objects.get(customer=customer_obj, complete=False)
+    form=checkoutform()
+    if request.method == "POST":
+        form= checkoutform(request.POST)
+        if form.is_valid():
+            clean_data = form.cleaned_data
+            obj = Address.objects.create(**clean_data)
+            obj.customer = customer_obj
+            obj.save()
+            order_items = order.products.all()
+            order_items.update(complete=True)
+            for item in order_items:
+                item.save()
+            
+            order.complete = True
+            order.take_away = True
+            order.save()
+        return redirect("menu")
+    return render(request,"ordering/checkout.html",{"form":form,"customer":customer_obj})
+        
+
+
 
 
 
@@ -173,12 +306,3 @@ def update_order(request,pk_test):
 
     context={"form":form}
     return render(request,"ordering/update_order.html",context)
-
-
-
-
-
-    
-
-
-
