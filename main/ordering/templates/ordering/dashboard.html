@@ -3,31 +3,31 @@
 {% block content %}
 <div class="col" class="container">
     <div class="row">
-        <div class="col-md-4 col-xl-3">
+        <div class="col-md-4 col-xl-4">
             <div class="card bg-c-blue order-card">
-                <div id="b" class="card-block">
-                    <h6 class="m-b-20 r">Total Orders</h6>
-                    <h2 class="text-right r"><i class="fa fa-cart-plus f-left"></i><span>{{total_order}}</span></h2>
+                <div id="b" style="height: 140px;" class="card-block rounded m-1 bg-primary">
+                    <h6 class="m-b-20  text-center my-2 border-end border-info">Total Orders</h6>
+                    <h2 style="margin-right: 1rem;" class="text-right "><i class="fa fa-cart-plus f-left "></i><span>{{total_order}}</span></h2>
                     <p class="m-b-0"><span class="f-right"></span></p>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-4 col-xl-3">
+        <div class="col-md-4 col-xl-4">
             <div class="card bg-c-green order-card">
-                <div class="card-block">
-                    <h6 class="m-b-20 r">Take away</h6>
-                    <h2 class="text-right r"><i class="fa fa-rocket f-left"></i><span>{{take_away}}</span></h2>
+                <div style="height: 140px;" class="card-block rounded m-1 bg-info">
+                    <h6 class="m-b-20 text-center my-2 border-end ">Take away</h6>
+                    <h2 style="margin-right: 1rem;" class="text-right "><i class="fa fa-rocket f-left"></i><span>{{take_away}}</span></h2>
                     <p class="m-b-0"><span class="f-right"></span></p>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-4 col-xl-3">
+        <div class="col-md-4 col-xl-4">
             <div class="card bg-c-pink order-card">
-                <div class="card-block">
-                    <h6 class="m-b-20 r">Payment Completions</h6>
-                    <h2 class="text-right r"><i class="fa fa-credit-card f-left"></i><span>{{payment}}</span></h2>
+                <div style="height: 140px;" class="card-block rounded m-1 bg-warning">
+                    <h6 class="m-b-20 text-center my-2 border-end ">Payment Completions</h6>
+                    <h2 style="margin-right: 1rem;"  class="text-right r"><i class="fa fa-credit-card f-left"></i><span>{{payment}}</span></h2>
                     <p class="m-b-0"><span class="f-right"></span></p>
                 </div>
             </div>
@@ -80,21 +80,17 @@
             <table class="table table-sm">
                 <tr>
                     <th>Product</th>
-                    <th>Date Ordered</th>
                     <th>Quantity</th>
                     <th>Update</th>
                     <th>Remove</th>
                 </tr>
                 {% for order in orders_info  %}
-                {% for carts in carts %}
+                {%for cart in order.products.all %}
                 <tr>
-                    {% if carts.order.id == order.id %}
-                    <td>{{carts.product}}</td>
-                    <td>{{carts.date_added}}</td>
-                    <td>{{carts.quantity}}</td>
-                    <td><a class="btn btn-sm btn-warning" href="{% url 'update_order' carts.id %}">Update</a></td>
-                    <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' carts.order.id  carts.id %}">Delete</a></td>
-                    {% endif %}
+                    <td>{{cart.product.name}}</td>
+                    <td>{{cart.quantity}}</td>
+                    <td><a class="btn btn-sm btn-warning" href="{% url 'update_order' cart.id %}">Update</a></td>
+                    <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id cart.id %}">Delete</a></td>
                 </tr>
                 {% endfor %}
                 {% endfor %}

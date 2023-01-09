@@ -1,20 +1,15 @@
 {% extends "account/base.html" %}
 
 {% block content %}
-<div class="row row1">
+<div class="card" style="width: 18rem;">
     {% for product in products %}
     {% if product.category == 'Todayspl' %}
-    <div class="col-lg-4">
-        <a href="{% url 'Productdetail' product.id   %}">
-
-            <img class="thumbnail" src="{{product.ImageURL}}">
-            <div class="box-element product">
-                <h6><strong>{{product.name}}</strong></h6>
-            </a>
-            <hr>
-            <a href="{% url 'Productdetail' product.id   %}"  class="btn btn-outline-secondary add-btn update-cart">View product</a>
-            <h4 style="display: inline-block;float:none">₹ {{product.price|floatformat:2}}</h4>
-        </div>
+    
+    <img src="{{product.ImageURL}}" class="card-img-top" >
+    <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">Rs{{product.price}}.</p>
+        <a href="{% url 'Productdetail' product.id   %}" class="btn btn-primary">View Product</a>
     </div>
     {% endif %}
     {% endfor %}

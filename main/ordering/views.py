@@ -220,7 +220,9 @@ def checkoutview(request):
 @admin_only
 def Dashboard(request):
     orders_info=order_info.objects.all()
+    print(orders_info)
     carts=cart.objects.all()
+    print(carts)
     products=Product.objects.all()
     customers=Customer.objects.all()
 

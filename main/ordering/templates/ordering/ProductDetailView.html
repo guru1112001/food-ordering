@@ -1,20 +1,20 @@
 {% extends "account/base.html" %}
 
 {% block content %}
-<article class="media content-section">
-    <img class="rounded-circle article-img" src="{{ product.ImageURL }}">
+<article class="media content-section border rounded mt-4 " style="width: 80%; margin-left: 10rem;">
+    <img style ="height: 50vh" class=" article-img" src="{{ product.ImageURL }}">
     <div class="media-body">
-        <div class="article-metadata">
-            <h1 class="mr-2">{{ product.name }}</h1>
+        <div class="article-metadata mb-5 mt-3">
+            <h1 class="mr-2 ">{{ product.name }}</h1>
         </div>
-        <p class="article-content">{{ product.description }}</p>
-        <h4 style="display: inline-block;float:none">₹ {{product.price|floatformat:2}}</h4>
+        <p style="font-size: 25px;" class="article-content ">{{ product.description }}</p>
+        <h4 style="display: inline-block;float:none ">₹ {{product.price|floatformat:2}}</h4><br>
         
         <!-- <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add
             to Cart</button> -->
-            <a href="{% url 'add-to-cart' product.id %}"  class="btn btn-outline-secondary add-btn update-cart">Add
+            <a href="{% url 'add-to-cart' product.id %}"  class="btn btn-outline-primary add-btn update-cart mt-4">Add
                 to Cart</a>
-            <a href="{% url 'remove-from-cart' product.id %}"  class="btn btn-outline-secondary add-btn update-cart">Remove from  Cart</a>
+            <a href="{% url 'remove-from-cart' product.id %}"  class="btn btn-outline-danger add-btn update-cart mt-4">Remove from  Cart</a>
     </div>
 </article>
 
