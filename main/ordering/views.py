@@ -200,6 +200,7 @@ def checkoutview(request):
             order.complete = True
             order.take_away = True
             order.save()
+            messages.info(request,"your order has been placed ")
         return redirect("menu")
     return render(request,"ordering/checkout.html",{"form":form,"customer":customer_obj})
         

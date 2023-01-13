@@ -1,17 +1,21 @@
 {% extends "account/base.html" %}
 
 {% block content %}
-<div class="card" style="width: 18rem;">
-    {% for product in products %}
-    {% if product.category == 'Lunch' %}
-    
-    <img src="{{product.ImageURL}}" class="card-img-top" >
-    <div class="card-body">
-        <h5 class="card-title">{{product.name}}</h5>
-        <p class="card-text">Rs{{product.price}}.</p>
-        <a href="{% url 'Productdetail' product.id   %}" class="btn btn-primary">View Product</a>
-    </div>
-    {% endif %}
-    {% endfor %}
+<div class="row" style="margin-right: 7px;
+margin-left: 7px;">
+{% for product in products %}
+{% if product.category == 'Lunch' %}
+<div class="col-lg-4 mt-5">
+  <img src="{{product.ImageURL}}"  class="thumbnails">
+  <div class="box-element product ">
+    <h6><strong>{{product.name}}</strong></h6>
+    <a href="{% url 'Productdetail' product.id   %}" class="btn btn-primary">View Product</a>
+    <h4>Rs {{product.price}}</h4>
+  </div>
 </div>
+{% endif %}
+{% endfor %}
+</div>
+
+
 {% endblock %}

@@ -27,7 +27,8 @@
             <p>{{message}}</p>
             {% endfor %}
             <div class="CreateAccount">
-                <a href="{% url 'register' %}" class="ml-2 btn btn-outline-light">Create Account</a>
+                <a href="{% url 'register' %}" class="ml-2 btn btn-outline-light">Create Account</a><br>
+                <a href="{% url 'admin:index' %}" class="ml-2 btn btn-outline-light">trying to login as admin </a>
             </div>
         </div>
     </div>

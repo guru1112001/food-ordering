@@ -84,5 +84,8 @@ class Address(models.Model):
     customer=models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
     Enrollment_no=models.CharField(max_length=15)
     course=models.CharField(max_length=20,choices=course_choice)
-    Semester=models.CharField(max_length=20,choices=sem_choice)\
+    Semester=models.CharField(max_length=20,choices=sem_choice)
+
+    def __str__(self):
+        return self.Enrollment_no
 
