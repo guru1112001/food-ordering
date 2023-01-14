@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load cart_template_tags %}
 {% load static %}
 
 <head>
@@ -68,8 +69,7 @@
                     <i class="fa-solid fa-cart-shopping"></i>
                     <span class="clearfix d-none d-sm-inline-block"> Cart </span>
                     <span class="position-absolute  start-100 translate-middle badge rounded-pill bg-danger">
-                        {{total_cart}}
-
+                        {{ request.user|cart_products }}
                     </span>
                 </a>
                 {% endif %}

@@ -1,13 +1,13 @@
 {% extends "account/base.html" %}
 
 {% block content %}
-<article class="media content-section border rounded mt-4 " style="width: 80%; margin-left: 10rem;">
-    <img style ="height: 50vh" class=" article-img" src="{{ product.ImageURL }}">
+<article class="media content-section border rounded mt-4 " style="width: 80%; margin-left: 5rem;">
+    <img style ="height: 50vh" class=" article-img mr-5" src="{{ product.ImageURL }}">
     <div class="media-body">
         <div class="article-metadata mb-5 mt-3">
             <h1 class="mr-2 ">{{ product.name }}</h1>
         </div>
-        <p style="font-size: 25px;" class="article-content ">{{ product.description }}</p>
+        <p style="font-size: 20px;" class="article-content ">{{ product.description }}</p>
         <h4 style="display: inline-block;float:none ">₹ {{product.price|floatformat:2}}</h4><br>
         
         <!-- <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add

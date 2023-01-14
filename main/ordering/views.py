@@ -203,6 +203,9 @@ def checkoutview(request):
             messages.info(request,"your order has been placed ")
         return redirect("menu")
     return render(request,"ordering/checkout.html",{"form":form,"customer":customer_obj})
+
+
+
         
 
 

@@ -8,15 +8,29 @@
         <div class="card">
             <form method="POST" action="">
                 {% csrf_token %}
-                <p>
-                    <label for="">Customer : {{customer.name}}</label>
-                </p>
-                {{form.as_p}}
+             <h6><strong> <label for="">Customer : {{customer.name}}</label></p></h6></strong>
+                <label for="formGroupExampleInput">Enter your Enrollment_no</label>
+
+                <div class="form-control" >
+                    
+                    {{form.Enrollment_no}}
+                </div>
+                <label for="formGroupExampleInput">choice your course </label>
+                <div class="form-control">
+                    
+                    {{form.course}}
+                </div>
+                <label for="formGroupExampleInput">choice your Semester </label>
+                <div class="form-control">
+                    
+                    {{form.Semester}}
+                </div>
                 
 
                 <div class="button_Container">
-                    <input class="btn login_btn" type="submit" value="Checkout">
+                    <input class="btn login_btn" type="submit" value=" Checkout">
                 </div>
             </form>
 
+            
 {% endblock %}
