@@ -14,7 +14,7 @@ def RegisterPage(request):
         if form.is_valid():
             form.save()
             username=form.cleaned_data.get("username")
-            messages.success(request,f"Your Account has been created! you are now able to log-in",username)
+            messages.info(request,f"Your Account has been created! you are now able to log-in",username)
             return redirect("login")
     
     else:

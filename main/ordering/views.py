@@ -6,6 +6,9 @@ from .forms import add_productform,cartform,checkoutform
 from django. contrib import messages
 from django.views.generic import View
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+import datetime
+
 
 # Create your views here.
 
@@ -13,17 +16,18 @@ from django.core.exceptions import ObjectDoesNotExist
 def menu(request):
     return render(request,"ordering/menu.html")
 
-
+@login_required
 def breakfast(request):
     products=Product.objects.all()
     context={"products":products}
     return render(request,"ordering/breakfast.html",context)
-
+@login_required
 def lunch(request):
     products=Product.objects.all()
     context={"products":products}
     return render(request,"ordering/lunch.html",context)
 
+@login_required
 def todayspl(request):
     products=Product.objects.all()
     context={"products":products}
@@ -182,6 +186,7 @@ class OrderSummaryView(View):
 #     return render(request,"ordering/checkout.html",{"form":form, "customer":customer_obj})
 
 def checkoutview(request):
+    transaction_id = datetime.datetime.now().timestamp()
     customer_obj = Customer.objects.get(user=request.user)
     order = order_info.objects.get(customer=customer_obj, complete=False)
     form=checkoutform()
@@ -199,26 +204,19 @@ def checkoutview(request):
             
             order.complete = True
             order.take_away = True
+            order.transaction_id=transaction_id
             order.save()
-            messages.info(request,"your order has been placed ")
+            
+            messages.info(request,"your order has been placed and your transaction id is")
+
         return redirect("menu")
-    return render(request,"ordering/checkout.html",{"form":form,"customer":customer_obj})
+    return render(request,"ordering/checkout.html",{"form":form,"customer":customer_obj,"order":order})
 
 
 
         
 
 
-
-
-
-
-    
-            
-
-
-
-    
 
 
 @admin_only
